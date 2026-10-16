@@ -1,63 +1,52 @@
-class Gato {
-    constructor(parameters) {
-        this.patas = 4;
-        this.peso = 0;
-        this.genero = '';
-        this.raza = '';
-        this.bigotes = true;
-        this.altura = 0;
-        this.edad = 0;
+class RegistroPage {
+    //Propiedades de la página
+    //Seran los elementos que tiene disponible
+    constructor(page) {
+        this.page = page;
+        this.inputFullName = this.page.getByRole('textbox', { name: 'Full Name' });
+        this.inputEmailAddress = this.page.getByRole('textbox', { name: 'Email Address' });
+        this.inputPassword = this.page.getByLabel('Password', { exact: true });
+        this.inputConfirmPassword = this.page.getByLabel('Confirm Password', { exact: true });
+        this.botonCreateAccount = this.page.getByRole('button', { name: 'Create Account' });
+        this.formulario = this.page.locator('div.bg-white.rounded-2xl.shadow-xl.p-8');
+        this.mensajeError = this.page.locator('div.bg-red-50.border.border-red-200.rounded-lg.p-4.mb-6');
     }
 
-    maullar() {
-
+    //Acciones
+    async llenarFullName(value) {
+        await this.inputFullName.fill(value);
     }
 
-    saltar() {
-
+    async llenarEmailAddress(value) {
+        await this.inputEmailAddress.fill(value);
     }
 
-    dormir() {
-
+    async llenarPassword(value) {
+        await this.inputPassword.fill(value);
     }
 
-    correr() {
-
+    async llenarConfirmPassword(value) {
+        await this.inputConfirmPassword.fill(value);
     }
 
-    comer() {
-
-    }
-}
-
-class Perro {
-    constructor(parameters) {
-        this.patas = 4;
-        this.peso = 0;
-        this.genero = '';
-        this.bigotes = true;
-        this.raza = '';
-        this.altura = 0;
-        this.edad = 0;
+    async clicarBotonCreateAccount() {
+        await this.botonCreateAccount.click();
     }
 
-    ladrar() {
+    async registrar(fullName, emailAddress, password, confirmPassword) {
 
-    }
+        //Entramos a la página
+        await this.page.goto('https://ecommerce-js-test.vercel.app');
+        await this.page.getByRole('link', { name: 'Register' }).click();
 
-    saltar() {
-
-    }
-
-    dormir() {
-
-    }
-
-    correr() {
-
-    }
-
-    comer() {
-
+        this.formulario.screenshot({ path: 'screenshots/formulario.png' })
+        //accedemos a los métodos
+        await this.llenarFullName(fullName);
+        await this.llenarEmailAddress(emailAddress);
+        await this.llenarPassword(password);
+        await this.llenarConfirmPassword(confirmPassword);
+        await this.clicarBotonCreateAccount();
     }
 }
+
+export default RegistroPage;
