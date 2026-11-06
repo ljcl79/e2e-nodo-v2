@@ -11,7 +11,7 @@ test.describe("Pruebas de Registro e2e", () => {
 
     test('Registro con datos válidos', async ({ page }) => {
         allure.epic('Datos válidos');
-
+        console.info("Iniciando acciones");
         await allure.step('1. Ejecutar acciones del formulario', async () => {
             await registroPage.registrar('Leonardo', 'ljcl79@gmail.com', '12345678', '12345678');
         });

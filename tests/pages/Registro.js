@@ -36,7 +36,7 @@ class RegistroPage {
     async registrar(fullName, emailAddress, password, confirmPassword) {
 
         //Entramos a la página
-        await this.page.goto('https://ecommerce-js-test.vercel.app');
+        await this.page.goto('/');
         await this.page.getByRole('link', { name: 'Register' }).click();
 
         this.formulario.screenshot({ path: 'screenshots/formulario.png' })

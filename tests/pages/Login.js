@@ -17,13 +17,17 @@ class LoginPage {
     async clickSignIn() {
         await this.buttonSignIn.click()
     }
-    async login(email, password) {
-        await this.page.goto('https://ecommerce-js-test.vercel.app/')
+    async accessLoginPage() {
+        await this.page.goto('/')
         await this.page.getByRole('link', { name: 'Login' }).click();
+    }
 
+    async login(email, password) {
+        await this.accessLoginPage();
         await this.fillEmail(email)
         await this.fillPassword(password)
         await this.clickSignIn()
     }
 }
-export default LoginPage;
+//export default LoginPage;
+module.exports = LoginPage;
