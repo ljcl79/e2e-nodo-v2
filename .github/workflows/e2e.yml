@@ -1,0 +1,40 @@
+#Nombre del Workflow
+name: pruebas e2e
+
+#Condiciones de ejecución - Cuando se ejecuta
+on:
+  pull_request:
+    branches: [staging]
+
+#Trabajo o que es lo que se ejecuta
+jobs:
+  test_e2e:
+    #Donde corre
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cargo el código
+        uses: actions/checkout@v7
+
+      - name: Instalamos Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instala las dependencias
+        run: npm ci
+
+      - name: Instalar navegadores playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Ejecutar los test
+        run: npx playwright test
+
+      - name: Obtenemos el reporte
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reporte-testing
+          path: playwright-report/
+          retention-days: 3
