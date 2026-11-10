@@ -2,6 +2,7 @@ import test, { expect } from "@playwright/test";
 import LoginPage from "./pages/Login";
 import * as allure from "allure-js-commons";
 
+//A partir de ahora cada vez que se haga un push request a staging se activaran las pruebas
 let loginPage
 test.describe("Pruebas de login", () => {
     test.beforeEach(async ({ page }) => {
