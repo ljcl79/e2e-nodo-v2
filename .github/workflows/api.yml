@@ -1,0 +1,41 @@
+# Nombre del workflow
+name: bruno tests
+
+# Cuando se ejecuta el workflow
+on:
+  push:
+    branches: [main,staging]
+
+  pull_request:
+    branches: [main,staging]
+
+jobs:
+  # Trabajo a ejecutar
+  test_bruno:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Carga el código
+        uses: actions/checkout@v7
+
+      - name: Prepara el ambiente
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+
+      - name: Instalar Bruno CLI
+        run: npm install -g @usebruno/cli
+
+      - name: Ejecutar Bruno
+        run: bru run /ruta_de_la_coleccion --env local -r --reporter-json bruno-report.json --reporter-html bruno-report.html
+
+      - name: Sube el reporte
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: bruno-report
+          path: |
+            bruno-report.json
+            bruno-report.html
+          retention-days: 7
+          if-no-files-found: warn

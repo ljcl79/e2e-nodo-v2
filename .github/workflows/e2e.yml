@@ -3,6 +3,8 @@ name: pruebas e2e
 
 #Condiciones de ejecución - Cuando se ejecuta
 on:
+  push:
+    branches: [staging]
   pull_request:
     branches: [staging]
 
